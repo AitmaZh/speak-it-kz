@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'home_page.dart';
-import 'assets/my_color.dart';
+import 'assets/my_colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,17 +15,17 @@ class MyApp extends StatelessWidget {
       title: 'Speak IT',
       theme: ThemeData(
         brightness: Brightness.light,
-        // primaryColor: const Color.fromRGBO(19, 41, 61, 1),
-        scaffoldBackgroundColor: const Color.fromRGBO(232, 241, 242, 1),
-        primarySwatch: myColor,
+        scaffoldBackgroundColor: backgroundColor,
+        primarySwatch: primaryColor,
 
-        fontFamily: 'San Serif',
+        fontFamily: 'Roboto',
 
-        /* textTheme: const TextTheme(
-          displayLarge: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-          titleLarge: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
-          bodyMedium: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
-        ), */
+        textTheme: TextTheme(
+          displaySmall: TextStyle(color: primaryColor),
+          headlineMedium: TextStyle(color: primaryColor.shade700, fontWeight: FontWeight.bold),
+          titleLarge: TextStyle(color: primaryColor.shade400),
+          labelLarge: const TextStyle(color: Colors.white),
+        ),
       ),
       home: const HomeScreen(),
       debugShowCheckedModeBanner: false,
