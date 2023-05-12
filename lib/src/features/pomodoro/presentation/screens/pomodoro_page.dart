@@ -6,7 +6,7 @@ import 'package:speak_it_kz/assets/my_colors.dart';
 import 'package:speak_it_kz/src/features/pomodoro/utils/constrants.dart';
 
 import '../widgets/progess_icons.dart';
-import '../widgets/custom_buttons.dart';
+import '../../../../shared/widgets/custom_buttons.dart';
 import '../../domain/models/pomodoro_status.dart';
 
 class PomodoroScreen extends StatefulWidget {
@@ -31,85 +31,87 @@ class _PomodoroScreenState extends State<PomodoroScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(bottom: 25),
-            child: Text(
-              'Pomodoro Timer',
-              style: Theme.of(context).textTheme.titleLarge,
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              margin: const EdgeInsets.only(bottom: 15),
+              child: Text(
+                'Pomodoro Timer',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Number: $pomodoroNum',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-              const SizedBox(
-                width: 30,
-              ),
-              Text(
-                'Set: $setNum',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // ----------------- CIRCULAR INDICATOR -----------------
-              Container(
-                margin: const EdgeInsets.only(top: 40),
-                child: CircularPercentIndicator(
-                  backgroundColor: IndicatorColors.backgroundColor,
-                  circularStrokeCap: CircularStrokeCap.round,
-                  radius: 120.0,
-                  lineWidth: 15.0,
-                  percent: _getPomodoroPercentage(),
-                  center: Text(
-                    _secondsToFormatedMinutes(remainingTime),
-                    style: Theme.of(context).textTheme.displaySmall,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Number: $pomodoroNum',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(
+                  width: 30,
+                ),
+                Text(
+                  'Set: $setNum',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // ----------------- CIRCULAR INDICATOR -----------------
+                Container(
+                  margin: const EdgeInsets.only(top: 40),
+                  child: CircularPercentIndicator(
+                    backgroundColor: IndicatorColors.backgroundColor,
+                    circularStrokeCap: CircularStrokeCap.round,
+                    radius: 120.0,
+                    lineWidth: 15.0,
+                    percent: _getPomodoroPercentage(),
+                    center: Text(
+                      _secondsToFormatedMinutes(remainingTime),
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                    progressColor: statusColor[pomodoroStatus],
                   ),
-                  progressColor: statusColor[pomodoroStatus],
                 ),
-              ),
-              // ----------------- PROGRESS ICONS -----------------
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 20),
-                child: ProgressIcons(
-                  total: pomodoroPerSet,
-                  done: pomodoroNum - (setNum * pomodoroPerSet),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(
-                  bottom: 20,
-                ),
-                child: Text(
-                  statusDescription[pomodoroStatus]!,
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-              ),
-              // ----------------- BUTTONS -----------------
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CustomButton(
-                      onTap: () => _resetButtonPressed, text: 'Reset'),
-                  const SizedBox(
-                    width: 60,
+                // ----------------- PROGRESS ICONS -----------------
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 20),
+                  child: ProgressIcons(
+                    total: pomodoroPerSet,
+                    done: pomodoroNum - (setNum * pomodoroPerSet),
                   ),
-                  CustomButton(
-                      onTap: () => _mainBtnPressed, text: mainButtonText),
-                ],
-              ),
-            ],
-          )
-        ],
+                ),
+                Container(
+                  margin: const EdgeInsets.only(
+                    bottom: 20,
+                  ),
+                  child: Text(
+                    statusDescription[pomodoroStatus]!,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                ),
+                // ----------------- BUTTONS -----------------
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomButton(
+                        onTap: () => _resetButtonPressed, text: 'Reset'),
+                    const SizedBox(
+                      width: 60,
+                    ),
+                    CustomButton(
+                        onTap: () => _mainBtnPressed, text: mainButtonText),
+                  ],
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -197,7 +199,6 @@ class _PomodoroScreenState extends State<PomodoroScreen> {
           mainButtonText = _btnTextPause;
         });
       } else {
-        // playSound();
         pomodoroNum++;
         _cancelTimer;
         if (pomodoroNum % pomodoroPerSet == 0) {

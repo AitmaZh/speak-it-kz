@@ -34,13 +34,16 @@ MaterialColor secondaryColor = MaterialColor(
   },
 );
 
-Color backgroundColor = const Color.fromRGBO(232, 241, 242, 1);
+Color backgroundColor = const Color.fromRGBO(232, 241, 242, .1); // const Color.fromRGBO(232, 241, 242, 1)
+Color transparentColor = const Color(0x00000000);
+Color shadowColor = primaryColor.shade300;
+Color whiteColor = Colors.white;
 
 Color inactiveNavbarIconsColor = Colors.grey;
 
 class ButtonColors {
   static Color overlayColor = secondaryColor;
-  static Color elevatedButtonTextColor = Colors.white;
+  static Color elevatedButtonTextColor = whiteColor;
 }
 
 class IndicatorColors {
