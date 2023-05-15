@@ -7,14 +7,15 @@ class AuthTextFormField extends StatefulWidget {
   late bool isObscured;
   void Function(String) onChanged;
   String? Function(String?) customValidator;
+  String errorText = '';
 
-  AuthTextFormField({
-    required this.textEditController,
-    required this.labelText,
-    required this.isObscured,
-    required this.onChanged,
-    required this.customValidator
-  });
+  AuthTextFormField(
+      {required this.textEditController,
+      required this.labelText,
+      required this.isObscured,
+      required this.onChanged,
+      required this.customValidator,
+      errorText});
 
   @override
   State<AuthTextFormField> createState() => _AuthTextFormFieldState();
@@ -51,6 +52,7 @@ class _AuthTextFormFieldState extends State<AuthTextFormField> {
         style: Theme.of(context).textTheme.bodyLarge,
         controller: widget.textEditController,
         decoration: InputDecoration(
+          errorText: (widget.errorText == '') ? null : widget.errorText,
           border: const OutlineInputBorder(),
           labelText: widget.labelText,
           suffixIcon: suffixIcon,

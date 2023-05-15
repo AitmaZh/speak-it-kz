@@ -34,7 +34,7 @@ MaterialColor secondaryColor = MaterialColor(
   },
 );
 
-Color backgroundColor = const Color.fromRGBO(232, 241, 242, .1); // const Color.fromRGBO(232, 241, 242, 1)
+Color backgroundColor = const Color.fromRGBO(232, 241, 242, .3); // const Color.fromRGBO(232, 241, 242, 1)
 Color transparentColor = const Color(0x00000000);
 Color shadowColor = primaryColor.shade300;
 Color whiteColor = Colors.white;

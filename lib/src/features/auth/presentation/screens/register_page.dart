@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
+import 'package:http/http.dart' as http;
 import 'package:speak_it_kz/assets/my_colors.dart';
 import 'package:speak_it_kz/network_handler.dart';
 import 'package:speak_it_kz/src/features/auth/presentation/screens/profile_page.dart';
@@ -20,6 +23,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController passwordController2 = TextEditingController();
+  String? languageController = "EN";
+
+  String errorText = 'The field cannot be empty';
+
+  String emailError = '';
+  bool validate = false;
+  bool circular = false;
 
   NetworkHandler networkHandler = NetworkHandler();
 
@@ -27,13 +37,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String _emailValue = '';
   String _passwordValue = '';
   String _confirmationPasswordValue = '';
-  String _langValue = '';
+
+  late Language selectedLanguage;
+  List<Language> languages = <Language>[
+    Language('EN'),
+    Language('FR'),
+    Language('ES')
+  ];
 
   static List<String> langList = ['EN', 'FR', 'ES'];
   String dropdownValue = langList.first;
 
   @override
   Widget build(BuildContext context) {
+    // void Function(Language?)? onChanged = ((Language? newValue) {
+    //   setState(() {
+    //     selectedLanguage = newValue!;
+    //   });
+    // });
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -71,7 +93,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       },
                       customValidator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your name';
+                          return errorText;
                         }
 
                         if (value[0] == '1' ||
@@ -86,6 +108,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             value[0] == '0') {
                           return 'The username cannot start with number';
                         }
+
                         return null;
                       },
                     ),
@@ -95,17 +118,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       isObscured: false,
                       onChanged: (value) {
                         _emailValue = value;
+                        setState(() {
+                          emailError = '';
+                        });
                       },
                       customValidator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter email';
+                          setState(() {
+                            emailError = errorText;
+                          });
+                          return emailError;
                         }
 
                         if (!value.contains('@') ||
                             !value.contains('.') ||
                             value.length < 12) {
-                          return 'Input is invalid';
+                          setState(() {
+                            emailError = 'Input is invalid';
+                          });
+                          return emailError;
                         }
+
+                        if (emailError == 'Email address is already taken') {
+                          return 'Email address is already taken';
+                        }
+
                         return null;
                       },
                     ),
@@ -118,7 +155,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       },
                       customValidator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter password';
+                          return errorText;
                         } else if (value.length < 8) {
                           return 'The length must be 8 characters or more';
                         }
@@ -134,7 +171,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       },
                       customValidator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please confirm the password';
+                          return errorText;
                         }
                         if (_confirmationPasswordValue != _passwordValue) {
                           return "Inputs doesn't match";
@@ -163,7 +200,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         onChanged: (String? value) {
                           // This is called when the user selects an item.
                           setState(() {
-                            dropdownValue = value!;
+                            languageController = value;
                           });
                         },
                         items: langList
@@ -175,8 +212,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         }).toList(),
                       ),
                     ),
-                    CustomButton(
-                        onTap: _registerButtonPressed, text: 'Register'),
+                    circular
+                        ? CircularProgressIndicator()
+                        : CustomButton(
+                            onTap: _registerButtonPressed, text: 'Register'),
                   ],
                 ),
               ),
@@ -188,16 +227,64 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   _registerButtonPressed() {
-    return (() {
+    return (() async {
+      setState(() {
+        circular = true;
+      });
       print('Register button pressed');
 
       if (_formKey.currentState!.validate()) {
-        networkHandler.get('');
-        print('Data validated successfully');
+        Map<String, String> data = {
+          "name": nameController.text,
+          "email": emailController.text,
+          "password": passwordController.text,
+          "role": "USER",
+          "language": "EN" // TODO: Make it changable
+        };
+        print(data);
 
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const ProfileScreen()));
+        // networkHandler.post('/auth/register', data);
+
+        //----------------s=
+
+        String url = "${networkHandler.baseUrl}/auth/register";
+        var response = await http.post(Uri.parse(url), body: data);
+        print(response.statusCode);
+        if (response.statusCode == 404) {
+          setState(() {
+            emailError = 'Email address is already taken';
+          });
+          _formKey.currentState!.validate();
+          print('The error text changed');
+          setState(() {
+            circular = false;
+          });
+        } else {
+          setState(() {
+            emailError = '';
+          });
+          print('Data validated successfully');
+
+          setState(() {
+            circular = false;
+          });
+
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const ProfileScreen()));
+        }
+        // ----------------
+
+        // checkUser(emailController.text);
+      } else {
+        setState(() {
+          circular = false;
+        });
       }
     });
   }
+}
+
+class Language {
+  Language(this.code);
+  final String code;
 }
