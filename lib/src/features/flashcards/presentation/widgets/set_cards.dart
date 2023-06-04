@@ -5,13 +5,17 @@ import 'package:speak_it_kz/src/features/flashcards/presentation/pages/flashcard
 class SetCard extends StatelessWidget {
   dynamic setName;
   dynamic setLevel;
+  dynamic id;
 
-  SetCard({required this.setName, required this.setLevel});
+  SetCard({required this.id, required this.setName, required this.setLevel});
 
   @override
   Widget build(BuildContext context) {
     setCardTapped() {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const FlashcardLearnScreen()));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>  FlashcardLearnScreen(id: id)));
     }
 
     return Card(

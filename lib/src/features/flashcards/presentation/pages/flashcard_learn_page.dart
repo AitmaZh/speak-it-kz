@@ -1,23 +1,49 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:speak_it_kz/assets/my_colors.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:speak_it_kz/network_handler.dart';
 import '../../domain/flashcard.dart';
 import '../widgets/flashcard_view.dart';
+import 'package:http/http.dart' as http;
 
-class FlashcardLearnScreen extends StatefulWidget {
-  const FlashcardLearnScreen({super.key});
+class FlashcardLearnScreen extends StatefulWidget { 
+  final String id;
+
+  FlashcardLearnScreen({required this.id});
 
   @override
   State<FlashcardLearnScreen> createState() => _FlashcardLearnScreenState();
 }
 
 class _FlashcardLearnScreenState extends State<FlashcardLearnScreen> {
-  List<Flashcard> _flashcards = [
-    Flashcard(word: "question 1", definition: "answer 1"),
-    Flashcard(word: "question 2", definition: "answer 2"),
-    Flashcard(word: "question 3", definition: "answer 3"),
-    Flashcard(word: "question 4", definition: "answer 4"),
+  NetworkHandler networkHandler = NetworkHandler();
+  
+  List<dynamic> flashcards = [
+    Flashcard(
+        word: "definition['word']", definition: "definition['description']"),
+    Flashcard(
+        word: "definition['word']", definition: "definition['description']")
   ];
+
+  fetchDefinitions() async {
+    var url = '${networkHandler.baseUrl}/topics/definitions/${widget.id}';
+    var response = await http.get(Uri.parse(url)); 
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      flashcards.removeAt(0);
+
+      var data = json.decode(response.body); 
+
+      data.forEach((definition) {
+        setState(() {
+          flashcards.add(Flashcard(
+              word: definition['word'], definition: definition['description'])); 
+        });
+      });
+      flashcards.removeAt(0);
+    }
+  }
 
   bool _left = true;
   bool _right = false;
@@ -26,16 +52,17 @@ class _FlashcardLearnScreenState extends State<FlashcardLearnScreen> {
   @override
   void initState() {
     super.initState();
+    fetchDefinitions();
   }
 
   void _increaseIndex() {
     setState(() {
-      if (_index == _flashcards.length - 2) {
+      if (_index == flashcards.length - 2) {
         _right = true;
       }
       _left = false;
       _index =
-          (_index++ < _flashcards.length) ? _index++ : _flashcards.length - 1;
+          (_index++ < flashcards.length) ? _index++ : flashcards.length - 1;
     });
   }
 
@@ -45,7 +72,7 @@ class _FlashcardLearnScreenState extends State<FlashcardLearnScreen> {
         _left = true;
       }
       _right = false;
-      _index = (_index-- >= 0) ? _index-- : _flashcards.length--;
+      _index = (_index-- >= 0) ? _index-- : flashcards.length--;
     });
   }
 
@@ -59,13 +86,16 @@ class _FlashcardLearnScreenState extends State<FlashcardLearnScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: primaryColor,),
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: primaryColor,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
         backgroundColor: transparentColor,
         shadowColor: transparentColor,
         title: Text(
-          "${_cardNumber()} / ${_flashcards.length}",
+          "${_cardNumber()} / ${flashcards.length}",
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
@@ -80,12 +110,12 @@ class _FlashcardLearnScreenState extends State<FlashcardLearnScreen> {
                 height: 450,
                 child: FlipCard(
                   speed: 550,
-                  front: FlashcardView(text: _flashcards[_index].word),
-                  back: FlashcardView(text: _flashcards[_index].definition),
+                  front: FlashcardView(text: flashcards[_index].word),
+                  back: FlashcardView(text: flashcards[_index].definition),
                 ),
               ),
             ),
-      
+
             // ------------------------ SWITCH CARDS ------------------------
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15),
@@ -112,13 +142,13 @@ class _FlashcardLearnScreenState extends State<FlashcardLearnScreen> {
                     const IconButton(
                       onPressed: null,
                       icon: Icon(Icons.chevron_right),
-                      tooltip: 'Previous card',
+                      tooltip: 'Next card',
                     )
                   else
                     IconButton(
                       onPressed: _increaseIndex,
                       icon: const Icon(Icons.chevron_right),
-                      tooltip: 'Previous card',
+                      tooltip: 'Next card',
                     ),
                 ],
               ),
@@ -163,6 +193,6 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   Widget build(BuildContext context) {
-    return const FlashcardLearnScreen();
+    return FlashcardLearnScreen(id: 'id');
   }
 }

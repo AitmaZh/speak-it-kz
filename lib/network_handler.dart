@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
 class NetworkHandler {
-  String baseUrl = 'http://localhost:8080'; // TODO: Add the base url later
+  String baseUrl = 'http://localhost:8080';
   var log = Logger();
 
   Future get(String url) async {

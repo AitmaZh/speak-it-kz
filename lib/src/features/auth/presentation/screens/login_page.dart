@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'package:speak_it_kz/src/features/auth/presentation/screens/profile_page.dart';
+import 'package:speak_it_kz/src/features/auth/user_secure_storage.dart';
 import '../../../../../assets/my_colors.dart';
 import '../../../../shared/widgets/custom_buttons.dart';
 import '../widgets/auth_textfields.dart';
 
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
+import 'package:speak_it_kz/network_handler.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,14 +21,15 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  final storage = const FlutterSecureStorage();
-
   TextEditingController emailController = TextEditingController();
-
   TextEditingController passwordController = TextEditingController();
 
-  String _emailValue = '';
+  NetworkHandler networkHandler = NetworkHandler();
 
+  String emailError = '';
+  String passwordError = '';
+
+  String _emailValue = '';
   String _passwordValue = '';
 
   @override
@@ -64,11 +69,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     isObscured: false,
                     onChanged: (value) {
                       _emailValue = value;
+                      setState(() {
+                        emailError = '';
+                      });
                     },
                     customValidator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Enter the email address';
                       }
+
+                      if (emailError == 'Email address is not registered') {
+                        return emailError;
+                      }
+
                       return null;
                     },
                   ),
@@ -78,11 +91,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     isObscured: true,
                     onChanged: (value) {
                       _passwordValue = value;
+                      setState(() {
+                        passwordError = '';
+                      });
                     },
                     customValidator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Enter the password';
                       }
+
+                      if (passwordError == 'Invalid password') {
+                        return passwordError;
+                      }
+
                       return null;
                     },
                   ),
@@ -97,14 +118,43 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   _loginButtonPressed() {
-    return () {
+    return () async {
       print('Login button pressed');
 
       if (_formKey.currentState!.validate()) {
-        print('Data validated successfully');
+        Map<String, String> data = {
+          "email": emailController.text,
+          "password": passwordController.text
+        };
 
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const ProfileScreen()));
+        String url = "${networkHandler.baseUrl}/auth/login";
+        var response = await http.post(Uri.parse(url), body: data);
+
+        if (response.statusCode == 404) {
+          setState(() {
+            emailError = 'Email address is not registered';
+          });
+          _formKey.currentState!.validate();
+        } else if (response.statusCode == 401) {
+          setState(() {
+            passwordError = 'Invalid password';
+          });
+          _formKey.currentState!.validate();
+        } else {
+          setState(() {
+            emailError = '';
+            passwordError = '';
+          });
+          print('Data validated successfully');
+
+          Map<String, dynamic> output = json.decode(response.body);
+
+          print('Token: ${output['accessToken']}');
+          await UserSecureStorage.setToken(output['accessToken']);
+          await UserSecureStorage.setEmail(data['email']);
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const ProfileScreen()));
+        }
       }
     };
   }

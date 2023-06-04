@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:speak_it_kz/assets/my_colors.dart';
 import 'package:speak_it_kz/network_handler.dart';
+import 'package:speak_it_kz/src/features/auth/presentation/screens/login_page.dart';
 import 'package:speak_it_kz/src/features/auth/presentation/screens/profile_page.dart';
 import '../../../../shared/widgets/custom_buttons.dart';
 import '../widgets/auth_textfields.dart';
@@ -38,24 +39,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String _passwordValue = '';
   String _confirmationPasswordValue = '';
 
-  late Language selectedLanguage;
-  List<Language> languages = <Language>[
-    Language('EN'),
-    Language('FR'),
-    Language('ES')
-  ];
-
   static List<String> langList = ['EN', 'FR', 'ES'];
   String dropdownValue = langList.first;
 
   @override
   Widget build(BuildContext context) {
-    // void Function(Language?)? onChanged = ((Language? newValue) {
-    //   setState(() {
-    //     selectedLanguage = newValue!;
-    //   });
-    // });
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -140,7 +128,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         }
 
                         if (emailError == 'Email address is already taken') {
-                          return 'Email address is already taken';
+                          return emailError;
                         }
 
                         return null;
@@ -243,9 +231,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         };
         print(data);
 
-        // networkHandler.post('/auth/register', data);
-
-        //----------------s=
+        // Fetching user data
 
         String url = "${networkHandler.baseUrl}/auth/register";
         var response = await http.post(Uri.parse(url), body: data);
@@ -270,11 +256,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           });
 
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const ProfileScreen()));
+              MaterialPageRoute(builder: (context) => const LoginScreen()));
         }
-        // ----------------
-
-        // checkUser(emailController.text);
       } else {
         setState(() {
           circular = false;
@@ -282,9 +265,4 @@ class _RegisterScreenState extends State<RegisterScreen> {
       }
     });
   }
-}
-
-class Language {
-  Language(this.code);
-  final String code;
 }
