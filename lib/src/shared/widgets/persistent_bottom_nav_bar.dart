@@ -3,6 +3,7 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:speak_it_kz/assets/my_colors.dart';
 
 import 'package:speak_it_kz/src/features/flashcards/presentation/pages/flashcard_home_page.dart';
+import '../../features/auth/presentation/screens/sign_to_system_page.dart';
 import '../../features/pomodoro/presentation/screens/pomodoro_page.dart';
 import '../../features/auth/presentation/screens/profile_page.dart';
 
@@ -20,7 +21,7 @@ class _PersistentBottomNavBarState extends State<PersistentBottomNavBar> {
     return [
       const PomodoroScreen(),
       FlashcardHomeScreen(),
-      const ProfileScreen(),
+      const SignToSystemScreen(),
     ];
   }
 

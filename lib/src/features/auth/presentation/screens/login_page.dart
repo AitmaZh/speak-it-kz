@@ -153,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
           await UserSecureStorage.setToken(output['accessToken']);
           await UserSecureStorage.setEmail(data['email']);
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const ProfileScreen()));
+              MaterialPageRoute(builder: (context) => ProfileScreen(email: emailController.text,)));
         }
       }
     };

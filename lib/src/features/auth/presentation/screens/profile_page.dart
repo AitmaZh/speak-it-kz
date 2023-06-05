@@ -11,7 +11,8 @@ import 'package:speak_it_kz/network_handler.dart';
 import 'package:http/http.dart' as http;
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  dynamic email;
+  ProfileScreen({super.key, required this.email});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -22,19 +23,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final profilePhotoSize = 120.0;
   NetworkHandler networkHandler = NetworkHandler();
 
-  Map<String, dynamic> userData = {};
-  Future<void> fetchUserData() async {
-    var emailDynamic = await UserSecureStorage.getEmail();
-    String email = emailDynamic.toString();
-    print('Email: $email');
-    // var data = await networkHandler.get('/users/${email}');
-    String url = "${networkHandler.baseUrl}/users/$email";
-    // var response = await http.get(Uri.parse(url));
-    // setState(() {
-    //   userData = json.decode(response.body);
-    // });
+  dynamic userName = 'Draft';
 
-    // print(jsonDecode(response.body));
+  fetchUserData() async {
+    var url = '${networkHandler.baseUrl}/users/${widget.email}';
+    var response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      var data = json.decode(response.body);
+
+      userName = (data['name']);
+    }
   }
 
   @override
@@ -45,11 +44,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    late String profileName = userData['name'].toString();
-    late String profileEmail = 'email@gmail.com';
-    const buttonText = 'Login';
+    late String profileName = userName;
+    late String profileEmail = widget.email;
+    const buttonText = 'Logout';
 
-    var profileNameSub = profileName[0].toUpperCase();
+    var profileNameSub = userName[0].toUpperCase();
 
     return Scaffold(
       body: SafeArea(

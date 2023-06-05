@@ -30,7 +30,7 @@ class _FlashcardHomeScreenState extends State<FlashcardHomeScreen> {
           gridItems.add(SetCard(
               id: topic['id'],
               setName: topic['name'],
-              setLevel: topic['level']));
+              setLevel: topic['level'])); 
         });
       });
     }
