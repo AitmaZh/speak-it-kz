@@ -32,7 +32,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (response.statusCode == 200 || response.statusCode == 201) {
       var data = json.decode(response.body);
 
-      userName = (data['name']);
+      setState(() {
+        userName = (data['name']);
+      });
     }
   }
 
