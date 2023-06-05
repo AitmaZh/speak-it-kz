@@ -42,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     fetchUserData();
-  }
+  } 
 
   @override
   Widget build(BuildContext context) {
