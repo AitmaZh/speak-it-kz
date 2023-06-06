@@ -4,8 +4,8 @@ import 'package:speak_it_kz/assets/my_colors.dart';
 import 'package:speak_it_kz/src/features/speaking%20clubs/presentation/screens/meeting_desc_page.dart';
 import 'package:speak_it_kz/src/shared/widgets/custom_buttons.dart';
 
-class AnnouncementCard extends StatefulWidget {
-  dynamic meetingId;
+class AnnouncementCard extends StatefulWidget { 
+  final String meetingId;
   dynamic meetingTitle;
   dynamic desc;
   dynamic image;
@@ -24,7 +24,7 @@ class AnnouncementCard extends StatefulWidget {
       required this.desc,
       this.image,
       required this.format,
-      required this.dateTime,
+      this.dateTime,
       this.address,
       this.city,
       required this.organizatorId,
@@ -45,19 +45,10 @@ String formatDateTime(dynamic inputDateTime) {
 
 class _AnnouncementCardState extends State<AnnouncementCard> {
   String defaultImage = 'lib/assets/img/announcement_default_image.jpg';
+  DateTime defaultDateTime = DateTime.parse('2023-06-08 12:25:09.883522');
 
   @override
   Widget build(BuildContext context) {
-    moreButtonTapped() {
-      return(() {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => MeetingDescScreen(
-                      meetingId: widget.meetingId,
-                    )));
-      });
-    }
 
     return Card(
       elevation: 0,
@@ -71,33 +62,38 @@ class _AnnouncementCardState extends State<AnnouncementCard> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.meetingTitle,
-                      style: Theme.of(context).textTheme.headlineSmall,
-                      textAlign: TextAlign.start,
+                    SizedBox(
+                      width: 200,
+                      child: Text(
+                        widget.meetingTitle,
+                        style: Theme.of(context).textTheme.titleLarge,
+                        textAlign: TextAlign.start,
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 7),
                       child: Text(
                         widget.address ?? widget.format,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: Theme.of(context).textTheme.labelMedium,
                         textAlign: TextAlign.start,
                       ),
                     ),
                     Text(
-                      formatDateTime(widget.dateTime),
-                      textAlign: TextAlign.start,
+                      formatDateTime(defaultDateTime), // TODO: Format dateTime
+                      
+                      textAlign: TextAlign.start, 
+                      style: TextStyle(color: primaryColor),
                     ),
                   ],
                 ),
-                CustomButton(onTap: moreButtonTapped, text: 'More'),
+                CustomButton(onTap: () {}, text: 'More'),
               ],
             ),
           ),

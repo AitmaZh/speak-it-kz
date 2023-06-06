@@ -6,10 +6,11 @@ import 'package:speak_it_kz/src/shared/widgets/custom_buttons.dart';
 
 import '../../../../../assets/my_colors.dart';
 import '../../../../../network_handler.dart';
-
+import 'organization_info_page.dart';
+ 
 class MeetingDescScreen extends StatefulWidget {
-  dynamic meetingId;
-  MeetingDescScreen({super.key, required this.meetingId});
+  final String meetingId;
+  MeetingDescScreen({required this.meetingId});
 
   @override
   State<MeetingDescScreen> createState() => _MeetingDescScreenState();
@@ -20,34 +21,33 @@ class _MeetingDescScreenState extends State<MeetingDescScreen> {
 
   String defaultImage = 'lib/assets/img/announcement_default_image.jpg';
 
-  fetchClubs() async {
-    var url = '${networkHandler.baseUrl}/'; // TODO: Finish URL
+  dynamic title;
+  dynamic desc;
+  dynamic format;
+  dynamic dateTime;
+  // dynamic organizatorName;
+  dynamic entryFee;
+
+  fetchMeetingInfo() async {
+    var url = '${networkHandler.baseUrl}/announcements/${widget.meetingId}';
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200 || response.statusCode == 201) {
       var data = json.decode(response.body);
+      print(data);
 
-      // data.forEach((announcement) {
-      //   // TODO: Finish
-      //   setState(() {
-      //     listItems.add(AnnouncementCard(
-      //       meetingId: announcement[''],
-      //       meetingTitle: announcement[''],
-      //       desc: announcement[''],
-      //       image: announcement[''],
-      //       format: announcement[''],
-      //       dateTime: announcement[''],
-      //       organizatorId: announcement[''],
-      //       prefLanguageLevel: announcement[''],
-      //       entryFee: announcement[''],
-      //     ));
-      //   });
-      // });
+      title = data['title'];
+      desc = data['description'];
+      format = data['format'];
+      dateTime = data['date'];
+      // organizatorName = data['title']; // TODO: Find org name
+      entryFee = data['entryFee'];
     }
   }
 
   @override
   void initState() {
     super.initState();
+    fetchMeetingInfo();
   }
 
   @override
@@ -69,37 +69,58 @@ class _MeetingDescScreenState extends State<MeetingDescScreen> {
         shadowColor: transparentColor,
       ),
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image(image: AssetImage(defaultImage)),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-              child:  Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        descText('Date: "date"'), // TODO: Format dateTime
-                        descText('Time: "time"'),
-                      ],
-                    ),
-                    descText('Format: "format"'),
-                    descText('Address: "address", "city"'),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5),
-                      child: descText(
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor'),
-                    ),
-                    descText('Language Level: "prefLanguageLevel"'),
-                    descText('Entry fee: "entryFee"'),
-                    descText('Organizator: "organizator[name]"'),
-                    descText('Contacts: "orgTel"'),
-                  ]),
-            ),
-            CustomButton(onTap: enrollButtonPressed, text: 'Enroll'),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image(image: AssetImage(defaultImage)),
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 0),
+                        child: Text(
+                          title,
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: descText(desc),
+                      ),
+                      const Divider(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          descText('Date: "date"'), // TODO: Format dateTime
+                          descText('Time: "time"'),
+                        ],
+                      ),
+                      descText('Format: $format'),
+                      descText('Address: "address", "city"'),
+                      descText('Entry fee: $entryFee'),
+                      const Divider(),
+                      InkWell(
+                        onTap: _organizationLinkPressed,
+                        child: Text(
+                          'link',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: secondaryColor),
+                        ),
+                        splashColor: secondaryColor,
+                      ),
+                      // descText('Contacts: "orgTel"'),
+                    ]),
+              ),
+              CustomButton(onTap: enrollButtonPressed, text: 'Enroll'),
+            ],
+          ),
         ),
       ),
     );
@@ -111,11 +132,21 @@ class _MeetingDescScreenState extends State<MeetingDescScreen> {
 
   descText(String text) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
       child: Text(
-          text,
-          style: Theme.of(context).textTheme.bodyMedium,
-          ),
+        text,
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
     );
+  }
+
+  _organizationLinkPressed() {
+    return (() {
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //       builder: (context) => OrganizationInfoPage(id: organizatorId)),
+      // );
+    });
   }
 }

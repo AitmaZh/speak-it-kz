@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import '../../../../../assets/my_colors.dart';
 import '../../../../../network_handler.dart';
 import '../widgets/announcement_card.dart';
+import 'meeting_desc_page.dart';
 
 class SpeakingClubsCatalogScreen extends StatefulWidget {
   const SpeakingClubsCatalogScreen({super.key});
@@ -16,7 +17,7 @@ class SpeakingClubsCatalogScreen extends StatefulWidget {
       _SpeakingClubsCatalogScreenState();
 }
 
-DateTime defaultDateTime = DateTime.parse('2023-06-08 12:25:09.883522');
+// DateTime defaultDateTime = DateTime.parse('2023-06-08 12:25:09.883522');
 
 class _SpeakingClubsCatalogScreenState
     extends State<SpeakingClubsCatalogScreen> {
@@ -30,7 +31,6 @@ class _SpeakingClubsCatalogScreenState
       desc: 'Улы Дала 29',
       address: 'Улы Дала 29',
       format: 'оффлайн',
-      dateTime: defaultDateTime,
       organizatorId: 'Lorem Insum',
       prefLanguageLevel: 'Lorem Insum',
       entryFee: 'Lorem Insum',
@@ -40,18 +40,16 @@ class _SpeakingClubsCatalogScreenState
       meetingTitle: 'Game Night',
       desc: 'онлайн',
       format: 'онлайн',
-      dateTime: defaultDateTime,
       organizatorId: 'Lorem Insum',
       prefLanguageLevel: 'Lorem Insum',
       entryFee: 'Lorem Insum',
     ),
     AnnouncementCard(
-      meetingId: 'Lorem Insum',
+      meetingId: 'Lorem Insum', 
       meetingTitle: 'Lorem Insum',
       desc: '',
       address: 'Петрова 18',
       format: 'оффлайн',
-      dateTime: defaultDateTime,
       organizatorId: 'Lorem Insum',
       prefLanguageLevel: 'Lorem Insum',
       entryFee: 'Lorem Insum',
