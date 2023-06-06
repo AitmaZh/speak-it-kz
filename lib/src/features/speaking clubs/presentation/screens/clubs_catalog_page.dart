@@ -17,74 +17,41 @@ class SpeakingClubsCatalogScreen extends StatefulWidget {
       _SpeakingClubsCatalogScreenState();
 }
 
-// DateTime defaultDateTime = DateTime.parse('2023-06-08 12:25:09.883522');
-
 class _SpeakingClubsCatalogScreenState
     extends State<SpeakingClubsCatalogScreen> {
   NetworkHandler networkHandler = NetworkHandler();
 
   int groupValue = 0;
-  List<AnnouncementCard> listItems = [
-    AnnouncementCard(
-      meetingId: 'BSC Speaking Club',
-      meetingTitle: 'BSC Speaking Club',
-      desc: 'Улы Дала 29',
-      address: 'Улы Дала 29',
-      format: 'оффлайн',
-      organizatorId: 'Lorem Insum',
-      prefLanguageLevel: 'Lorem Insum',
-      entryFee: 'Lorem Insum',
-    ),
-    AnnouncementCard(
-      meetingId: 'Game Night',
-      meetingTitle: 'Game Night',
-      desc: 'онлайн',
-      format: 'онлайн',
-      organizatorId: 'Lorem Insum',
-      prefLanguageLevel: 'Lorem Insum',
-      entryFee: 'Lorem Insum',
-    ),
-    AnnouncementCard(
-      meetingId: 'Lorem Insum', 
-      meetingTitle: 'Lorem Insum',
-      desc: '',
-      address: 'Петрова 18',
-      format: 'оффлайн',
-      organizatorId: 'Lorem Insum',
-      prefLanguageLevel: 'Lorem Insum',
-      entryFee: 'Lorem Insum',
-    ),
-  ];
+  List<AnnouncementCard> listItems = [];
 
   fetchClubs() async {
-    // var url = '${networkHandler.baseUrl}/'; // TODO: Finish URL
-    // var response = await http.get(Uri.parse(url));
-    // if (response.statusCode == 200 || response.statusCode == 201) {
-    //   var data = json.decode(response.body);
+    var url = '${networkHandler.baseUrl}/announcements'; // TODO: Finish URL
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      var data = json.decode(response.body);
 
-      // data.forEach((announcement) {
-      //   // TODO: Finish
-      //   setState(() {
-      //     listItems.add(AnnouncementCard(
-      //       meetingId: announcement[''],
-      //       meetingTitle: announcement[''],
-      //       desc: announcement[''],
-      //       image: announcement[''],
-      //       format: announcement[''],
-      //       dateTime: announcement[''],
-      //       organizatorId: announcement[''],
-      //       prefLanguageLevel: announcement[''],
-      //       entryFee: announcement[''],
-      //     ));
-      //   });
-      // });
-    // }
+      data.forEach((announcement) {
+        // TODO: Finish
+        setState(() {
+          listItems.add(AnnouncementCard(
+            meetingId: announcement['id'],
+            meetingTitle: announcement['title'],
+            desc: announcement['description'],
+            image: announcement[''],
+            format: announcement['format'], // TODO: Implement dateTime
+            organizatorId: announcement['organizationId'],
+            prefLanguageLevel: 'B2',
+            entryFee: announcement['entryFee'], 
+          ));
+        });
+      });
+    }
   }
 
   @override
   initState() {
     super.initState();
-    // fetchClubs();
+    fetchClubs();
   }
 
   @override
