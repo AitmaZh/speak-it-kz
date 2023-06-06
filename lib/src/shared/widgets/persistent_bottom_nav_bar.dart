@@ -3,6 +3,7 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:speak_it_kz/assets/my_colors.dart';
 
 import 'package:speak_it_kz/src/features/flashcards/presentation/pages/flashcard_home_page.dart';
+import 'package:speak_it_kz/src/features/speaking%20clubs/presentation/screens/clubs_catalog_page.dart';
 import '../../features/auth/presentation/screens/sign_to_system_page.dart';
 import '../../features/pomodoro/presentation/screens/pomodoro_page.dart';
 
@@ -18,6 +19,7 @@ class _PersistentBottomNavBarState extends State<PersistentBottomNavBar> {
 
   List<Widget> _buildScreens() {
     return [
+      const SpeakingClubsCatalogScreen(),
       const PomodoroScreen(),
       FlashcardHomeScreen(),
       const SignToSystemScreen(),
@@ -26,6 +28,12 @@ class _PersistentBottomNavBarState extends State<PersistentBottomNavBar> {
 
   List<PersistentBottomNavBarItem> _navBarItems() {
     return [
+      PersistentBottomNavBarItem(
+          icon: Icon(Icons.school, color: primaryColor),
+          inactiveIcon: Icon(
+            Icons.school,
+            color: inactiveNavbarIconsColor,
+          )),
       PersistentBottomNavBarItem(
           icon: Icon(Icons.timer, color: primaryColor),
           inactiveIcon: Icon(
