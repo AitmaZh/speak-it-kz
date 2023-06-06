@@ -59,10 +59,10 @@ class _SpeakingClubsCatalogScreenState
   ];
 
   fetchClubs() async {
-    var url = '${networkHandler.baseUrl}/'; // TODO: Finish URL
-    var response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      var data = json.decode(response.body);
+    // var url = '${networkHandler.baseUrl}/'; // TODO: Finish URL
+    // var response = await http.get(Uri.parse(url));
+    // if (response.statusCode == 200 || response.statusCode == 201) {
+    //   var data = json.decode(response.body);
 
       // data.forEach((announcement) {
       //   // TODO: Finish
@@ -80,13 +80,13 @@ class _SpeakingClubsCatalogScreenState
       //     ));
       //   });
       // });
-    }
+    // }
   }
 
   @override
   initState() {
     super.initState();
-    fetchClubs();
+    // fetchClubs();
   }
 
   @override

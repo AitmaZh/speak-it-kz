@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:speak_it_kz/src/features/auth/presentation/screens/login_page.dart';
+import 'package:speak_it_kz/src/features/auth/presentation/screens/profile_page.dart';
 import 'package:speak_it_kz/src/features/auth/presentation/screens/register_page.dart';
 import 'package:speak_it_kz/src/shared/widgets/custom_buttons.dart';
+import 'package:speak_it_kz/src/features/auth/presentation/widgets/google_auth_button.dart';
+
+import '../../api/google_sign_in_api.dart';
 
 class SignToSystemScreen extends StatelessWidget {
   const SignToSystemScreen({super.key});
@@ -13,7 +17,7 @@ class SignToSystemScreen extends StatelessWidget {
       return (() {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => LoginScreen()),
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
         );
       });
     }
@@ -27,6 +31,23 @@ class SignToSystemScreen extends StatelessWidget {
       });
     }
 
+    googleButtonPressed() async {
+      final user = await GoogleSignInApi.login();
+
+      if (user == null) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Sign in failed')));
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => GoogleProfileScreen(
+                    user: user,
+                  )),
+        );
+      }
+    }
+
     return Scaffold(
       body: SafeArea(
           child: Column(
@@ -34,7 +55,7 @@ class SignToSystemScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(15.0),
             child: Text(
               'Welcome to Speak IT',
               style: Theme.of(context).textTheme.headlineSmall,
@@ -49,6 +70,9 @@ class SignToSystemScreen extends StatelessWidget {
               CustomButton(onTap: joinButtonPressed, text: 'Join for free'),
             ],
           ),
+          Text('or'),
+          GoogleAuthButton(
+              onTap: () => googleButtonPressed, text: 'Sign In with Google'),
         ],
       )),
     );

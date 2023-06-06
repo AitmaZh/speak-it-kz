@@ -44,6 +44,9 @@ Color inactiveNavbarIconsColor = Colors.grey;
 class ButtonColors {
   static Color overlayColor = secondaryColor;
   static Color elevatedButtonTextColor = whiteColor;
+
+  static Color googleOverlayColor = whiteColor;
+  static Color googleTextColor = Colors.black;
 }
 
 class IndicatorColors {
