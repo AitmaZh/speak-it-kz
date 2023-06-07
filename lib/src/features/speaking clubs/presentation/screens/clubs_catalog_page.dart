@@ -37,7 +37,6 @@ class _SpeakingClubsCatalogScreenState
             meetingId: announcement['id'],
             meetingTitle: announcement['title'],
             desc: announcement['description'],
-            image: announcement[''],
             format: announcement['format'], // TODO: Implement dateTime
             organizatorId: announcement['organizationId'],
             prefLanguageLevel: 'B2',
@@ -56,6 +55,7 @@ class _SpeakingClubsCatalogScreenState
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         title: Text(

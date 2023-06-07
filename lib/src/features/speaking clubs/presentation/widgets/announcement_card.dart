@@ -93,7 +93,17 @@ class _AnnouncementCardState extends State<AnnouncementCard> {
                     ),
                   ],
                 ),
-                CustomButton(onTap: () {}, text: 'More'),
+                ElevatedButton(
+                  style: ButtonStyle(
+                      overlayColor: MaterialStateProperty.all<Color>(
+                          ButtonColors.overlayColor),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MeetingDescScreen()));
+                    }, child: Text('More')),
               ],
             ),
           ),

@@ -9,8 +9,8 @@ import '../../../../../network_handler.dart';
 import 'organization_info_page.dart';
  
 class MeetingDescScreen extends StatefulWidget {
-  final String meetingId;
-  MeetingDescScreen({required this.meetingId});
+  dynamic meetingId;
+  MeetingDescScreen({this.meetingId});
 
   @override
   State<MeetingDescScreen> createState() => _MeetingDescScreenState();
