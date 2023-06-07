@@ -1,11 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:speak_it_kz/assets/my_colors.dart';
-import 'package:flip_card/flip_card.dart';
 import 'package:speak_it_kz/network_handler.dart';
-import '../widgets/flashcard_view.dart';
-import 'package:http/http.dart' as http;
 
 import 'organization_info_page.dart';
 

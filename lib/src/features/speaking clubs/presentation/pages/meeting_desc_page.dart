@@ -1,16 +1,15 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:speak_it_kz/assets/my_colors.dart';
+import 'package:speak_it_kz/network_handler.dart';
 import 'package:http/http.dart' as http;
-import 'package:speak_it_kz/src/shared/widgets/custom_buttons.dart';
 
-import '../../../../../assets/my_colors.dart';
-import '../../../../../network_handler.dart';
-import '../../../speaking clubs2/presentation/pages/organization_info_page.dart';
- 
+import 'enroll_confirmation_page.dart';
+import 'organization_info_page.dart';
+
 class MeetingDescScreen extends StatefulWidget {
-  dynamic meetingId;
-  MeetingDescScreen({super.key, this.meetingId});
+  dynamic id;
+
+  MeetingDescScreen({this.id});
 
   @override
   State<MeetingDescScreen> createState() => _MeetingDescScreenState();
@@ -19,39 +18,65 @@ class MeetingDescScreen extends StatefulWidget {
 class _MeetingDescScreenState extends State<MeetingDescScreen> {
   NetworkHandler networkHandler = NetworkHandler();
 
+  dynamic title = 'Free English Conversation';
+  dynamic desc =
+      'The Speaking Club is the best way to Practice Speaking in English and other languages Online in a real-life setting. Structured conversation groups with incredible hosts.';
+  dynamic format = 'ONLINE';
+  dynamic dateTime = 'default';
+  dynamic date = '08.06';
+  dynamic time = '12:25';
+  dynamic address = 'Saryarqa Avenue 28';
+  dynamic city = 'Astana';
+  // dynamic organizatorName;
+  dynamic entryFee = 'free';
   String defaultImage = 'lib/assets/img/announcement_default_image.jpg';
 
-  dynamic title = 'title';
-  dynamic desc = 'desc';
-  dynamic format = 'format';
-  dynamic dateTime = 'date';
-  // dynamic organizatorName;
-  dynamic entryFee = 'entryFee';
+  // fetchDefinitions() async {
+  //   var url = '${networkHandler.baseUrl}/topics/definitions/${widget.id}';
+  //   var response = await http.get(Uri.parse(url));
+  //   if (response.statusCode == 200 || response.statusCode == 201) {
+  //     flashcards.removeAt(0);
 
-  fetchMeetingInfo() async {
-    var url = '${networkHandler.baseUrl}/announcements/${widget.meetingId}';
-    var response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      var data = json.decode(response.body);
-      print(data);
+  //     var data = json.decode(response.body);
 
-      title = data['title'];
-      desc = data['description'];
-      format = data['format'];
-      dateTime = data['date'];
-      // organizatorName = data['title']; // TODO: Find org name
-      entryFee = data['entryFee'];
-    }
-  }
+  //     data.forEach((definition) {
+  //       setState(() {
+  //         flashcards.add(Flashcard(
+  //             word: definition['word'], definition: definition['description']));
+  //       });
+  //     });
+  //     flashcards.removeAt(0);
+  //   }
+  // }
 
   @override
   void initState() {
     super.initState();
-    // fetchMeetingInfo();
+    // fetchDefinitions();
   }
 
   @override
   Widget build(BuildContext context) {
+    //   _organizationLinkPressed() {
+    //   return (() {
+    //     // Navigator.push(
+    //     //   context,
+    //     //   MaterialPageRoute(
+    //     //       builder: (context) => OrganizationInfoPage(id: organizatorId)),
+    //     // );
+    //   });
+    // }
+
+    _organizationLinkPressed() {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => OrganizationInfoPage()));
+    }
+
+    _enrollButtonPressed() {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => EnrollConfirmationScreen()));
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -93,21 +118,24 @@ class _MeetingDescScreenState extends State<MeetingDescScreen> {
                         child: descText(desc),
                       ),
                       const Divider(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          descText('Date: "date"'), // TODO: Format dateTime
-                          descText('Time: "time"'),
-                        ],
+                      SizedBox(
+                        width: 320,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            descText('Date: $date'), // TODO: Format dateTime
+                            descText('Time: $time'),
+                          ],
+                        ),
                       ),
                       descText('Format: $format'),
-                      descText('Address: "address", "city"'),
+                      descText('Address: $address, $city'),
                       descText('Entry fee: $entryFee'),
                       const Divider(),
                       InkWell(
                         onTap: _organizationLinkPressed,
                         child: Text(
-                          'link',
+                          'XPLORE',
                           textAlign: TextAlign.left,
                           style: TextStyle(
                               decoration: TextDecoration.underline,
@@ -115,19 +143,15 @@ class _MeetingDescScreenState extends State<MeetingDescScreen> {
                         ),
                         splashColor: secondaryColor,
                       ),
-                      // descText('Contacts: "orgTel"'),
                     ]),
               ),
-              CustomButton(onTap: enrollButtonPressed, text: 'Enroll'),
+              ElevatedButton(
+                  onPressed: _enrollButtonPressed, child: Text('Enroll')),
             ],
           ),
         ),
       ),
     );
-  }
-
-  enrollButtonPressed() {
-    return (() {});
   }
 
   descText(String text) {
@@ -138,15 +162,5 @@ class _MeetingDescScreenState extends State<MeetingDescScreen> {
         style: Theme.of(context).textTheme.bodyMedium,
       ),
     );
-  }
-
-  _organizationLinkPressed() {
-    return (() {
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //       builder: (context) => OrganizationInfoPage(id: organizatorId)),
-      // );
-    });
   }
 }

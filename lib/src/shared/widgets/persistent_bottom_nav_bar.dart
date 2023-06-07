@@ -3,10 +3,9 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:speak_it_kz/assets/my_colors.dart';
 
 import 'package:speak_it_kz/src/features/flashcards/presentation/pages/flashcard_home_page.dart';
-import 'package:speak_it_kz/src/features/speaking%20clubs/presentation/screens/clubs_catalog_page.dart';
 import '../../features/auth/presentation/screens/sign_to_system_page.dart';
 import '../../features/pomodoro/presentation/screens/pomodoro_page.dart';
-import '../../features/speaking clubs2/presentation/pages/clubs_catalog_page2.dart';
+import '../../features/speaking clubs/presentation/pages/clubs_catalog_page.dart';
 
 class PersistentBottomNavBar extends StatefulWidget {
   const PersistentBottomNavBar({super.key});
@@ -20,8 +19,7 @@ class _PersistentBottomNavBarState extends State<PersistentBottomNavBar> {
 
   List<Widget> _buildScreens() {
     return [
-      // const SpeakingClubsCatalogScreen(),
-      ClubsCatalogScreen2(),
+      ClubsCatalogScreen(),
       const PomodoroScreen(),
       FlashcardHomeScreen(),
       const SignToSystemScreen(),

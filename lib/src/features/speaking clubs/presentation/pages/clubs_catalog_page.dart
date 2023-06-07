@@ -5,26 +5,26 @@ import 'package:speak_it_kz/assets/my_colors.dart';
 import 'package:speak_it_kz/network_handler.dart';
 import 'package:http/http.dart' as http;
 
-import '../widgets/set_cards.dart';
+import '../widgets/announcement_card.dart';
 
-class ClubsCatalogScreen2 extends StatefulWidget {
-  ClubsCatalogScreen2({super.key});
+class ClubsCatalogScreen extends StatefulWidget {
+  ClubsCatalogScreen({super.key});
 
   @override
-  State<ClubsCatalogScreen2> createState() => _ClubsCatalogScreen2State();
+  State<ClubsCatalogScreen> createState() => _ClubsCatalogScreenState();
 }
 
-class _ClubsCatalogScreen2State extends State<ClubsCatalogScreen2> {
+class _ClubsCatalogScreenState extends State<ClubsCatalogScreen> {
   NetworkHandler networkHandler = NetworkHandler();
 
 
-  List<SetCard2> listItems = [
-    SetCard2(
+  List<AnnouncementCard> listItems = [
+    AnnouncementCard(
       dateTime: null,
       format: 'ONLINE',
       meetingTitle: 'Free English Conversation',
     ),
-    SetCard2(
+    AnnouncementCard(
       dateTime: null,
       format: 'OFFLINE',
       meetingTitle: 'Speaking Club Weekend',
@@ -40,7 +40,7 @@ class _ClubsCatalogScreen2State extends State<ClubsCatalogScreen2> {
       data.forEach((announcement) {
         setState(() {
           listItems.add(
-            SetCard2(
+            AnnouncementCard(
               dateTime: null,
               format: announcement['format'],
               meetingTitle: announcement['title'],
@@ -63,7 +63,7 @@ class _ClubsCatalogScreen2State extends State<ClubsCatalogScreen2> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         title: Text(
-          'Flashcards',
+          'Speaking Clubs',
           style: Theme.of(context).textTheme.headlineSmall,
         ),
         backgroundColor: transparentColor,

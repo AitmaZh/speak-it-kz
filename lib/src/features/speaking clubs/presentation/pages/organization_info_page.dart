@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:speak_it_kz/assets/my_colors.dart';
 
-import '../widgets/set_cards.dart';
+import '../widgets/announcement_card.dart';
 
 class OrganizationInfoPage extends StatefulWidget {
   dynamic id;
@@ -13,13 +13,14 @@ class OrganizationInfoPage extends StatefulWidget {
 }
 
 class _OrganizationInfoPageState extends State<OrganizationInfoPage> {
-  List<SetCard2> listItems = [
-    SetCard2(
+  List<AnnouncementCard> listItems = [
+    AnnouncementCard(
       dateTime: null,
       format: 'ONLINE',
       meetingTitle: 'Free English Conversation',
     ),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
