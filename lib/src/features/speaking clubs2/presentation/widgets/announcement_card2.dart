@@ -4,7 +4,7 @@ import 'package:speak_it_kz/assets/my_colors.dart';
 import 'package:speak_it_kz/src/features/speaking%20clubs/presentation/screens/meeting_desc_page.dart';
 import 'package:speak_it_kz/src/shared/widgets/custom_buttons.dart';
 
-class AnnouncementCard extends StatefulWidget {
+class AnnouncementCard2 extends StatefulWidget {
   final String meetingId;
   dynamic meetingTitle;
   dynamic desc;
@@ -17,7 +17,7 @@ class AnnouncementCard extends StatefulWidget {
   dynamic prefLanguageLevel;
   dynamic entryFee;
 
-  AnnouncementCard(
+  AnnouncementCard2(
       {super.key,
       required this.meetingId,
       required this.meetingTitle,
@@ -32,7 +32,7 @@ class AnnouncementCard extends StatefulWidget {
       required this.entryFee});
 
   @override
-  State<AnnouncementCard> createState() => _AnnouncementCardState();
+  State<AnnouncementCard2> createState() => _AnnouncementCard2State();
 }
 
 String formatDateTime(dynamic inputDateTime) {
@@ -43,21 +43,12 @@ String formatDateTime(dynamic inputDateTime) {
   return formattedDateTime;
 }
 
-class _AnnouncementCardState extends State<AnnouncementCard> {
+class _AnnouncementCard2State extends State<AnnouncementCard2> {
   String defaultImage = 'lib/assets/img/announcement_default_image.jpg';
   DateTime defaultDateTime = DateTime.parse('2023-06-08 12:25:09.883522');
 
   @override
   Widget build(BuildContext context) {
-    navigateToDesc() {
-      return (() {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => MeetingDescScreen()),
-        );
-      });
-    }
-    
     return Card(
       elevation: 0,
       color: transparentColor,
@@ -117,5 +108,14 @@ class _AnnouncementCardState extends State<AnnouncementCard> {
         ],
       ),
     );
+  }
+
+  navigateToDesc() {
+    return (() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MeetingDescScreen()),
+      );
+    });
   }
 }

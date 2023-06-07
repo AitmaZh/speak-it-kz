@@ -4,7 +4,7 @@ import 'package:speak_it_kz/assets/my_colors.dart';
 class OrganizationInfoPage extends StatefulWidget {
   dynamic id;
 
-  OrganizationInfoPage({super.key, required this.id});
+  OrganizationInfoPage({super.key, this.id});
 
   @override
   State<OrganizationInfoPage> createState() => _OrganizationInfoPageState();

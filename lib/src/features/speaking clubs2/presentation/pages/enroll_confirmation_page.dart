@@ -1,25 +1,25 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:speak_it_kz/assets/my_colors.dart';
+import 'package:flip_card/flip_card.dart';
+import 'package:speak_it_kz/network_handler.dart';
+import '../widgets/flashcard_view.dart';
 import 'package:http/http.dart' as http;
-import 'package:speak_it_kz/src/shared/widgets/custom_buttons.dart';
 
-import '../../../../../assets/my_colors.dart';
-import '../../../../../network_handler.dart';
-import '../../../speaking clubs2/presentation/pages/organization_info_page.dart';
- 
-class MeetingDescScreen extends StatefulWidget {
-  dynamic meetingId;
-  MeetingDescScreen({super.key, this.meetingId});
+import 'organization_info_page.dart';
+
+class EnrollConfirmationScreen extends StatefulWidget {
+  dynamic id;
+
+  EnrollConfirmationScreen({this.id});
 
   @override
-  State<MeetingDescScreen> createState() => _MeetingDescScreenState();
+  State<EnrollConfirmationScreen> createState() => _EnrollConfirmationScreenState();
 }
 
-class _MeetingDescScreenState extends State<MeetingDescScreen> {
+class _EnrollConfirmationScreenState extends State<EnrollConfirmationScreen> {
   NetworkHandler networkHandler = NetworkHandler();
-
-  String defaultImage = 'lib/assets/img/announcement_default_image.jpg';
 
   dynamic title = 'title';
   dynamic desc = 'desc';
@@ -27,31 +27,54 @@ class _MeetingDescScreenState extends State<MeetingDescScreen> {
   dynamic dateTime = 'date';
   // dynamic organizatorName;
   dynamic entryFee = 'entryFee';
+  String defaultImage = 'lib/assets/img/announcement_default_image.jpg';
 
-  fetchMeetingInfo() async {
-    var url = '${networkHandler.baseUrl}/announcements/${widget.meetingId}';
-    var response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      var data = json.decode(response.body);
-      print(data);
+  // fetchDefinitions() async {
+  //   var url = '${networkHandler.baseUrl}/topics/definitions/${widget.id}';
+  //   var response = await http.get(Uri.parse(url));
+  //   if (response.statusCode == 200 || response.statusCode == 201) {
+  //     flashcards.removeAt(0);
 
-      title = data['title'];
-      desc = data['description'];
-      format = data['format'];
-      dateTime = data['date'];
-      // organizatorName = data['title']; // TODO: Find org name
-      entryFee = data['entryFee'];
-    }
-  }
+  //     var data = json.decode(response.body);
+
+  //     data.forEach((definition) {
+  //       setState(() {
+  //         flashcards.add(Flashcard(
+  //             word: definition['word'], definition: definition['description']));
+  //       });
+  //     });
+  //     flashcards.removeAt(0);
+  //   }
+  // }
 
   @override
   void initState() {
     super.initState();
-    // fetchMeetingInfo();
+    // fetchDefinitions();
   }
 
   @override
   Widget build(BuildContext context) {
+    //   _organizationLinkPressed() {
+    //   return (() {
+    //     // Navigator.push(
+    //     //   context,
+    //     //   MaterialPageRoute(
+    //     //       builder: (context) => OrganizationInfoPage(id: organizatorId)),
+    //     // );
+    //   });
+    // }
+
+    _organizationLinkPressed() {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => OrganizationInfoPage()));
+    }
+
+    _enrollButtonPressed() {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => OrganizationInfoPage()));
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -118,16 +141,13 @@ class _MeetingDescScreenState extends State<MeetingDescScreen> {
                       // descText('Contacts: "orgTel"'),
                     ]),
               ),
-              CustomButton(onTap: enrollButtonPressed, text: 'Enroll'),
+              ElevatedButton(
+                  onPressed: _enrollButtonPressed, child: Text('Enroll')),
             ],
           ),
         ),
       ),
     );
-  }
-
-  enrollButtonPressed() {
-    return (() {});
   }
 
   descText(String text) {
@@ -138,15 +158,5 @@ class _MeetingDescScreenState extends State<MeetingDescScreen> {
         style: Theme.of(context).textTheme.bodyMedium,
       ),
     );
-  }
-
-  _organizationLinkPressed() {
-    return (() {
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //       builder: (context) => OrganizationInfoPage(id: organizatorId)),
-      // );
-    });
   }
 }

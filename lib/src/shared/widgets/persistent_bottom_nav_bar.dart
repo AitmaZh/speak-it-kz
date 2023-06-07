@@ -6,6 +6,7 @@ import 'package:speak_it_kz/src/features/flashcards/presentation/pages/flashcard
 import 'package:speak_it_kz/src/features/speaking%20clubs/presentation/screens/clubs_catalog_page.dart';
 import '../../features/auth/presentation/screens/sign_to_system_page.dart';
 import '../../features/pomodoro/presentation/screens/pomodoro_page.dart';
+import '../../features/speaking clubs2/presentation/pages/clubs_catalog_page2.dart';
 
 class PersistentBottomNavBar extends StatefulWidget {
   const PersistentBottomNavBar({super.key});
@@ -19,7 +20,8 @@ class _PersistentBottomNavBarState extends State<PersistentBottomNavBar> {
 
   List<Widget> _buildScreens() {
     return [
-      const SpeakingClubsCatalogScreen(),
+      // const SpeakingClubsCatalogScreen(),
+      ClubsCatalogScreen2(),
       const PomodoroScreen(),
       FlashcardHomeScreen(),
       const SignToSystemScreen(),
