@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:speak_it_kz/assets/my_colors.dart';
 import 'package:intl/intl.dart';
 
-import 'package:speak_it_kz/src/features/speaking%20clubs/presentation/pages/meeting_desc_page.dart';
+import 'package:speak_it_kz/src/features/speaking_clubs/presentation/pages/meeting_desc_page.dart';
 
 class AnnouncementCard extends StatelessWidget {
   dynamic meetingTitle;

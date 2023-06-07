@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
               color: primaryColor.shade700, fontWeight: FontWeight.bold),
           titleLarge: TextStyle(color: primaryColor.shade700),
           titleMedium: TextStyle(color: primaryColor),
+          titleSmall: TextStyle(color: secondaryColor, fontSize: 22),
           labelLarge: TextStyle(
               color: ButtonColors.elevatedButtonTextColor, fontSize: 16),
           labelMedium: TextStyle(color: secondaryColor),

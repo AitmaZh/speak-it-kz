@@ -7,7 +7,7 @@ import 'package:speak_it_kz/assets/my_colors.dart';
 import 'package:speak_it_kz/network_handler.dart';
 import 'package:speak_it_kz/src/features/auth/api/google_sign_in_api.dart';
 import 'package:speak_it_kz/src/features/auth/presentation/screens/sign_to_system_page.dart';
-import 'package:speak_it_kz/src/features/speaking%20clubs/presentation/pages/clubs_catalog_page.dart';
+import 'package:speak_it_kz/src/features/speaking_clubs/presentation/pages/clubs_catalog_page.dart';
 import 'package:speak_it_kz/src/shared/widgets/custom_buttons.dart';
 import '../widgets/profile_items.dart';
 import 'package:http/http.dart' as http;

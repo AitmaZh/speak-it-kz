@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:speak_it_kz/assets/my_colors.dart';
 import 'package:speak_it_kz/network_handler.dart';
 
-import '../../../speaking_clubs/presentation/pages/organization_info_page.dart';
-
+import 'organization_info_page.dart';
 
 class EnrollConfirmationScreen extends StatefulWidget {
   dynamic id;
