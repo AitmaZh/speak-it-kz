@@ -22,7 +22,26 @@ class _SpeakingClubsCatalogScreenState
   NetworkHandler networkHandler = NetworkHandler();
 
   int groupValue = 0;
-  List<AnnouncementCard> listItems = [];
+  List<AnnouncementCard> listItems = [
+    AnnouncementCard(
+      meetingId: 'id',
+      meetingTitle: 'Free English Conversation',
+      desc: 'description',
+      format: 'ONLINE', // TODO: Implement dateTime
+      organizatorId: 'organizationId',
+      prefLanguageLevel: 'B2',
+      entryFee: 'free',
+    ),
+    AnnouncementCard(
+      meetingId: 'id',
+      meetingTitle: 'Speaking Club Weekend',
+      desc: 'description',
+      format: 'OFFLINE', // TODO: Implement dateTime
+      organizatorId: 'organizationId',
+      prefLanguageLevel: 'B2',
+      entryFee: 'free',
+    )
+  ];
 
   fetchClubs() async {
     var url = '${networkHandler.baseUrl}/announcements'; // TODO: Finish URL

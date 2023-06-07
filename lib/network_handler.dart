@@ -5,7 +5,7 @@ import 'package:logger/logger.dart';
 
 class NetworkHandler {
   String baseUrl = 'http://localhost:3000';
-  // String baseUrl = 'http://10.0.2.2/api'; 
+  // String baseUrl = 'http://10.0.2.2'; 
   // String baseUrl = 'http://0.0.0.0/api';
   var log = Logger();
 

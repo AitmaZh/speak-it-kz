@@ -80,7 +80,7 @@ class _PomodoroScreenState extends State<PomodoroScreen> {
                 ),
                 // ----------------- PROGRESS ICONS -----------------
                 Container(
-                  margin: const EdgeInsets.symmetric(vertical: 20),
+                  margin: const EdgeInsets.symmetric(vertical: 20), 
                   child: ProgressIcons(
                     total: pomodoroPerSet,
                     done: pomodoroNum - (setNum * pomodoroPerSet),

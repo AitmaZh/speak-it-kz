@@ -17,7 +17,9 @@ class FlashcardHomeScreen extends StatefulWidget {
 class _FlashcardHomeScreenState extends State<FlashcardHomeScreen> {
   NetworkHandler networkHandler = NetworkHandler();
 
-  List<SetCard> gridItems = [];
+  List<SetCard> gridItems = [
+    SetCard(id: 'id', setName: 'Basic English', setLevel: 'B2'),
+  ];
 
   fetchTopics() async {
     var url = '${networkHandler.baseUrl}/topics';
@@ -30,7 +32,7 @@ class _FlashcardHomeScreenState extends State<FlashcardHomeScreen> {
           gridItems.add(SetCard(
               id: topic['id'],
               setName: topic['name'],
-              setLevel: topic['level'])); 
+              setLevel: topic['level']));
         });
       });
     }
