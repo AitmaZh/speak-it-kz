@@ -5,7 +5,6 @@ import 'package:speak_it_kz/assets/my_colors.dart';
 import 'package:speak_it_kz/network_handler.dart';
 import 'package:http/http.dart' as http;
 
-import '../widgets/announcement_card2.dart';
 import '../widgets/set_cards.dart';
 
 class ClubsCatalogScreen2 extends StatefulWidget {
@@ -18,31 +17,44 @@ class ClubsCatalogScreen2 extends StatefulWidget {
 class _ClubsCatalogScreen2State extends State<ClubsCatalogScreen2> {
   NetworkHandler networkHandler = NetworkHandler();
 
-  List<SetCard2> gridItems = [
-    SetCard2(dateTime: null, format: 'FORMATON', meetingTitle: 'TITLETITLE',),
+
+  List<SetCard2> listItems = [
+    SetCard2(
+      dateTime: null,
+      format: 'ONLINE',
+      meetingTitle: 'Free English Conversation',
+    ),
+    SetCard2(
+      dateTime: null,
+      format: 'OFFLINE',
+      meetingTitle: 'Speaking Club Weekend',
+    ),
   ];
 
-  // fetchTopics() async {
-  //   var url = '${networkHandler.baseUrl}/topics';
-  //   var response = await http.get(Uri.parse(url));
-  //   if (response.statusCode == 200 || response.statusCode == 201) {
-  //     var data = json.decode(response.body);
+  fetchClubs() async {
+    var url = '${networkHandler.baseUrl}/announcements';
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      var data = json.decode(response.body);
 
-  //     data.forEach((topic) {
-  //       setState(() {
-  //         gridItems.add(SetCard(
-  //             id: topic['id'],
-  //             setName: topic['name'],
-  //             setLevel: topic['level']));
-  //       });
-  //     });
-  //   }
-  // }
+      data.forEach((announcement) {
+        setState(() {
+          listItems.add(
+            SetCard2(
+              dateTime: null,
+              format: announcement['format'],
+              meetingTitle: announcement['title'],
+            ),
+          );
+        });
+      });
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    // fetchTopics();
+    fetchClubs();
   }
 
   @override
@@ -59,10 +71,10 @@ class _ClubsCatalogScreen2State extends State<ClubsCatalogScreen2> {
       ),
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 20),
           child: GridView.count(
             crossAxisCount: 1,
-            children: gridItems,
+            children: listItems,
           ),
         ),
       ),

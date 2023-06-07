@@ -21,132 +21,41 @@ class EnrollConfirmationScreen extends StatefulWidget {
 class _EnrollConfirmationScreenState extends State<EnrollConfirmationScreen> {
   NetworkHandler networkHandler = NetworkHandler();
 
-  dynamic title = 'title';
-  dynamic desc = 'desc';
-  dynamic format = 'format';
-  dynamic dateTime = 'date';
-  // dynamic organizatorName;
-  dynamic entryFee = 'entryFee';
-  String defaultImage = 'lib/assets/img/announcement_default_image.jpg';
-
-  // fetchDefinitions() async {
-  //   var url = '${networkHandler.baseUrl}/topics/definitions/${widget.id}';
-  //   var response = await http.get(Uri.parse(url));
-  //   if (response.statusCode == 200 || response.statusCode == 201) {
-  //     flashcards.removeAt(0);
-
-  //     var data = json.decode(response.body);
-
-  //     data.forEach((definition) {
-  //       setState(() {
-  //         flashcards.add(Flashcard(
-  //             word: definition['word'], definition: definition['description']));
-  //       });
-  //     });
-  //     flashcards.removeAt(0);
-  //   }
-  // }
-
-  @override
-  void initState() {
-    super.initState();
-    // fetchDefinitions();
-  }
-
   @override
   Widget build(BuildContext context) {
-    //   _organizationLinkPressed() {
-    //   return (() {
-    //     // Navigator.push(
-    //     //   context,
-    //     //   MaterialPageRoute(
-    //     //       builder: (context) => OrganizationInfoPage(id: organizatorId)),
-    //     // );
-    //   });
-    // }
-
-    _organizationLinkPressed() {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => OrganizationInfoPage()));
-    }
-
-    _enrollButtonPressed() {
+    _toHistoryButtonPressed() {
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => OrganizationInfoPage()));
     }
 
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios_new_rounded,
-            color: primaryColor,
-          ),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(
-          'Meeting Info',
-          style: Theme.of(context).textTheme.headlineSmall,
-        ),
-        backgroundColor: transparentColor,
-        shadowColor: transparentColor,
-      ),
       body: SafeArea(
-        child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image(image: AssetImage(defaultImage)),
-              Container(
-                margin:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 0),
-                        child: Text(
-                          title,
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: descText(desc),
-                      ),
-                      const Divider(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          descText('Date: "date"'), // TODO: Format dateTime
-                          descText('Time: "time"'),
-                        ],
-                      ),
-                      descText('Format: $format'),
-                      descText('Address: "address", "city"'),
-                      descText('Entry fee: $entryFee'),
-                      const Divider(),
-                      InkWell(
-                        onTap: _organizationLinkPressed,
-                        child: Text(
-                          'link',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              color: secondaryColor),
-                        ),
-                        splashColor: secondaryColor,
-                      ),
-                      // descText('Contacts: "orgTel"'),
-                    ]),
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Center(
+            child: Container(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                children: [
+                  Icon(
+                    Icons.emoji_emotions,
+                    color: secondaryColor,
+                    size: 125,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('Thanks!', style: Theme.of(context).textTheme.displayMedium,),
+                  ),
+                  Text('You are sucessfully registered!', style: Theme.of(context).textTheme.titleLarge,),
+                ],
               ),
-              ElevatedButton(
-                  onPressed: _enrollButtonPressed, child: Text('Enroll')),
-            ],
-          ),
-        ),
-      ),
+            ),
+          ),        
+          ElevatedButton(onPressed: _toHistoryButtonPressed, child: Text('Go to history')),
+          ],
+      )),
     );
   }
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:speak_it_kz/assets/my_colors.dart';
-import 'package:speak_it_kz/src/features/flashcards/presentation/pages/flashcard_learn_page.dart';
-import 'package:speak_it_kz/src/features/speaking%20clubs/presentation/screens/meeting_desc_page.dart';
+import 'package:intl/intl.dart';
+
 import 'package:speak_it_kz/src/features/speaking%20clubs2/presentation/pages/meeting_desc_page2.dart';
 
 class SetCard2 extends StatelessWidget {
@@ -21,32 +21,23 @@ class SetCard2 extends StatelessWidget {
 
   SetCard2({required this.meetingTitle, required this.format, required this.dateTime});
 
+  String formatDateTime(dynamic inputDateTime) {
+    DateTime dateTimeToFormat = inputDateTime;
+    String formattedDateTime = DateFormat('dd.MM / kk:mm')
+        .format(dateTimeToFormat); //2023-06-06 03:27:09.883522
+
+    return formattedDateTime;
+  }
+
   @override
   Widget build(BuildContext context) {
-    SetCard2Tapped() {
+    moreButtonTapped() {
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) =>  MeetingDescScreen2()));
     }
-    
 
-    // return Card(
-    //   child: InkWell(
-    //     splashColor: secondaryColor.shade200,
-    //     onTap: SetCard2Tapped,
-    //     child: SizedBox(
-    //       width: 300,
-    //       height: 150,
-    //       child: Column(
-    //         mainAxisAlignment: MainAxisAlignment.center,
-    //         children: [
-    //           Text('Card')
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // );
     return Card(
       elevation: 0,
       color: transparentColor,
@@ -83,8 +74,7 @@ class SetCard2 extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      // formatDateTime(defaultDateTime), // TODO: Format dateTime
-                      'dateTime',
+                      formatDateTime(defaultDateTime), // TODO: Format dateTime
                       textAlign: TextAlign.start,
                       style: TextStyle(color: primaryColor),
                     ),
@@ -97,7 +87,7 @@ class SetCard2 extends StatelessWidget {
                         overlayColor: MaterialStateProperty.all<Color>(
                             ButtonColors.overlayColor),
                       ),
-                      onPressed: SetCard2Tapped,
+                      onPressed: moreButtonTapped,
                       child: Text('More')),
                 ),
               ],

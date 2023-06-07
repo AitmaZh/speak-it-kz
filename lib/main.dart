@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: primaryColor,
         fontFamily: 'Roboto',
         textTheme: TextTheme(
+          displayMedium: TextStyle(fontSize: 36, color: secondaryColor, fontWeight: FontWeight.bold),
           displaySmall: TextStyle(color: primaryColor),
           headlineLarge: TextStyle(
               color: primaryColor.shade700, fontWeight: FontWeight.bold),

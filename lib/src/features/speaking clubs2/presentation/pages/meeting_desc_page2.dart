@@ -7,6 +7,7 @@ import 'package:speak_it_kz/network_handler.dart';
 import '../widgets/flashcard_view.dart';
 import 'package:http/http.dart' as http;
 
+import 'enroll_confirmation_page.dart';
 import 'organization_info_page.dart';
 
 class MeetingDescScreen2 extends StatefulWidget {
@@ -21,13 +22,18 @@ class MeetingDescScreen2 extends StatefulWidget {
 class _MeetingDescScreen2State extends State<MeetingDescScreen2> {
   NetworkHandler networkHandler = NetworkHandler();
 
-  dynamic title = 'title';
-  dynamic desc = 'desc';
-  dynamic format = 'format';
-  dynamic dateTime = 'date';
+  dynamic title = 'Free English Conversation';
+  dynamic desc =
+      'The Speaking Club is the best way to Practice Speaking in English and other languages Online in a real-life setting. Structured conversation groups with incredible hosts.';
+  dynamic format = 'ONLINE';
+  dynamic dateTime = 'default';
+  dynamic date = '08.06';
+  dynamic time = '12:25';
+  dynamic address = 'Saryarqa Avenue 28';
+  dynamic city = 'Astana';
   // dynamic organizatorName;
-  dynamic entryFee = 'entryFee';
-String defaultImage = 'lib/assets/img/announcement_default_image.jpg';
+  dynamic entryFee = 'free';
+  String defaultImage = 'lib/assets/img/announcement_default_image.jpg';
 
   // fetchDefinitions() async {
   //   var url = '${networkHandler.baseUrl}/topics/definitions/${widget.id}';
@@ -54,8 +60,7 @@ String defaultImage = 'lib/assets/img/announcement_default_image.jpg';
   }
 
   @override
- 
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     //   _organizationLinkPressed() {
     //   return (() {
     //     // Navigator.push(
@@ -73,83 +78,84 @@ String defaultImage = 'lib/assets/img/announcement_default_image.jpg';
 
     _enrollButtonPressed() {
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => OrganizationInfoPage()));
+          MaterialPageRoute(builder: (context) => EnrollConfirmationScreen()));
     }
 
-      return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios_new_rounded,
-              color: primaryColor,
-            ),
-            onPressed: () => Navigator.pop(context),
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: primaryColor,
           ),
-          title: Text(
-            'Meeting Info',
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-          backgroundColor: transparentColor,
-          shadowColor: transparentColor,
+          onPressed: () => Navigator.pop(context),
         ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image(image: AssetImage(defaultImage)),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 0),
-                          child: Text(
-                            title,
-                            style: Theme.of(context).textTheme.headlineSmall,
-                          ),
+        title: Text(
+          'Meeting Info',
+          style: Theme.of(context).textTheme.headlineSmall,
+        ),
+        backgroundColor: transparentColor,
+        shadowColor: transparentColor,
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image(image: AssetImage(defaultImage)),
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 0),
+                        child: Text(
+                          title,
+                          style: Theme.of(context).textTheme.headlineSmall,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5),
-                          child: descText(desc),
-                        ),
-                        const Divider(),
-                        Row(
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: descText(desc),
+                      ),
+                      const Divider(),
+                      SizedBox(
+                        width: 320,
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            descText('Date: "date"'), // TODO: Format dateTime
-                            descText('Time: "time"'),
+                            descText('Date: $date'), // TODO: Format dateTime
+                            descText('Time: $time'),
                           ],
                         ),
-                        descText('Format: $format'),
-                        descText('Address: "address", "city"'),
-                        descText('Entry fee: $entryFee'),
-                        const Divider(),
-                        InkWell(
-                          onTap: _organizationLinkPressed,
-                          child: Text(
-                            'link',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                color: secondaryColor),
-                          ),
-                          splashColor: secondaryColor,
+                      ),
+                      descText('Format: $format'),
+                      descText('Address: $address, $city'),
+                      descText('Entry fee: $entryFee'),
+                      const Divider(),
+                      InkWell(
+                        onTap: _organizationLinkPressed,
+                        child: Text(
+                          'XPLORE',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: secondaryColor),
                         ),
-                        // descText('Contacts: "orgTel"'),
-                      ]),
-                ),
-                ElevatedButton(
-                    onPressed: _enrollButtonPressed, child: Text('Enroll')),
-              ],
-            ),
+                        splashColor: secondaryColor,
+                      ),
+                    ]),
+              ),
+              ElevatedButton(
+                  onPressed: _enrollButtonPressed, child: Text('Enroll')),
+            ],
           ),
         ),
-      );
-    
+      ),
+    );
   }
 
   descText(String text) {
