@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:speak_it_kz/assets/my_colors.dart';
 import 'package:speak_it_kz/network_handler.dart';
 import 'package:http/http.dart' as http;
 
+import 'billing_form_page.dart';
 import 'enroll_confirmation_page.dart';
 import 'organization_info_page.dart';
 
@@ -35,17 +38,11 @@ class _MeetingDescScreenState extends State<MeetingDescScreen> {
   //   var url = '${networkHandler.baseUrl}/topics/definitions/${widget.id}';
   //   var response = await http.get(Uri.parse(url));
   //   if (response.statusCode == 200 || response.statusCode == 201) {
-  //     flashcards.removeAt(0);
 
   //     var data = json.decode(response.body);
 
-  //     data.forEach((definition) {
-  //       setState(() {
-  //         flashcards.add(Flashcard(
-  //             word: definition['word'], definition: definition['description']));
-  //       });
-  //     });
-  //     flashcards.removeAt(0);
+
+  //       setState(() {});
   //   }
   // }
 
@@ -74,7 +71,7 @@ class _MeetingDescScreenState extends State<MeetingDescScreen> {
 
     _enrollButtonPressed() {
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => EnrollConfirmationScreen()));
+          MaterialPageRoute(builder: (context) => BillingFormScreen()));
     }
 
     return Scaffold(
